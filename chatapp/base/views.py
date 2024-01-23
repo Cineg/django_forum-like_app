@@ -5,14 +5,24 @@ from django.http import (
     HttpResponsePermanentRedirect,
     HttpResponseRedirect,
 )
-from .models import Room
+from django.db.models import Q
+from .models import Room, Topic
 from .forms import RoomForm
 
 
 # Create your views here.
 def home(request: HttpRequest) -> HttpResponse:
-    rooms = Room.objects.all()
-    context: dict = {"rooms": rooms}
+    q: str | None = request.GET.get("q")
+    if q == None:
+        q = ""
+
+    rooms = Room.objects.filter(
+        Q(topic__name__icontains=q) | Q(name__icontains=q) | Q(description__icontains=q)
+    )
+    topics = Topic.objects.all()
+    rooms_count = rooms.count()
+
+    context: dict = {"rooms": rooms, "topics": topics, "rooms_count": rooms_count}
     return render(request, "base/home.html", context)
 
 
