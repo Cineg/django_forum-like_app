@@ -1,2 +1,38 @@
 {% extends "main.html" %}
-{% block content %}<h1>{{ room.name }}</h1>{% endblock content %}
+{% block content %}
+    <main class="room">
+        <section>
+            <h1>{{ room.name }}</h1>
+            <p>{{ room.description }}</p>
+            <div class="comment-wrapper">
+                <h3>Conversation</h3>
+                {% for message in conversation_messages %}
+                    <div class="message">
+                        {% if message.user == request.user %}
+                        <a href="{% url 'delete-message' message.id %}">Delete</a>
+                        {% endif %}
+                        <small>@ {{ message.user }} {{ message.created|timesince }} ago</small>
+                        <p>{{ message.body }}</p>
+                        <hr />
+                    </div>
+                {% endfor %}
+            </div>
+            {% if request.user.is_authenticated %}
+                <div class="comment-form">
+                    <form method="POST", action="">
+                        {% csrf_token %}
+                        <input type="text" name="body" placeholder="Write your message here..." />
+                    </form>
+                </div>
+            {% endif %}
+        </section>
+        <aside class="participants">
+            <h3>Participants</h3>
+            {% for participant in participants %}
+                <div>
+                    <p>@{{ participant }}</p>
+                </div>
+            {% endfor %}
+        </aside>
+    </main>
+{% endblock content %}

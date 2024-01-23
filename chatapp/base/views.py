@@ -11,7 +11,7 @@ from django.http import (
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User, AbstractBaseUser
 from django.db.models import Q
-from .models import Room, Topic
+from .models import Message, Room, Topic
 from .forms import RoomForm
 
 
@@ -22,7 +22,7 @@ def loginPage(request: HttpRequest) -> HttpResponse:
         return redirect("home")
 
     if request.method == "POST":
-        username: str | None = request.POST.get("username")
+        username: str | None = request.POST.get("username").lower()
         password: str | None = request.POST.get("password")
 
         try:
@@ -97,7 +97,21 @@ def home(request: HttpRequest) -> HttpResponse:
 
 def room(request: HttpRequest, pk: str) -> HttpResponse:
     room: Room = Room.objects.get(id=int(pk))
-    context: dict[str, Room] = {"room": room}
+    conversation_messages = room.message_set.all()  # type: ignore
+    participants = room.participants.all()
+
+    if request.method == "POST":
+        message: Message = Message.objects.create(
+            user=request.user, room=room, body=request.POST.get("body")
+        )
+        room.participants.add(request.user)
+        return redirect("room", pk=room.id)
+
+    context: dict = {
+        "room": room,
+        "conversation_messages": conversation_messages,
+        "participants": participants,
+    }
 
     return render(request, "base/room.html", context)
 
@@ -147,4 +161,19 @@ def deleteRoom(request: HttpRequest, pk: str) -> HttpResponse:
         room.delete()
         return redirect("home")
 
+    return render(request, "base/delete.html", context)
+
+
+@login_required(login_url="/login")
+def deleteMessage(request: HttpRequest, pk: str) -> HttpResponse:
+    message: Message = Message.objects.get(id=int(pk))
+
+    if request.user != message.user:
+        return HttpResponse("You are not allowed here.")
+
+    if request.method == "POST":
+        message.delete()
+        return redirect("home")
+
+    context: dict = {"obj": message}
     return render(request, "base/delete.html", context)
