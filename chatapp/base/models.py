@@ -19,8 +19,11 @@ class Room(models.Model):
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering: list[str] = ["-updated", "-created"]
+
     def __str__(self) -> str:
-        return f"{self.name}, {self.description}, {self.updated}, {self.created}"
+        return f"{self.name}"
 
 
 class Message(models.Model):
