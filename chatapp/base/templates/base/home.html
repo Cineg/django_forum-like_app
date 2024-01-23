@@ -18,8 +18,10 @@
             <a href="{% url 'create-room' %}">Create Room</a>
             {% for room in rooms %}
                 <article>
-                    <a href="{% url 'update-room' room.id %}">Edit room</a>
-                    <a href="{% url 'delete-room' room.id %}">Delete Room</a>
+                    {% if request.user == room.host %}
+                        <a href="{% url 'update-room' room.id %}">Edit room</a>
+                        <a href="{% url 'delete-room' room.id %}">Delete Room</a>
+                    {% endif %}
                     <h5>
                         <span>@{{ room.host.username }}</span>
                         {{ room.id }} --

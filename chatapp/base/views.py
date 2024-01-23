@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.http import (
     HttpRequest,
@@ -15,6 +16,9 @@ from .forms import RoomForm
 
 # Create your views here.
 def loginPage(request: HttpRequest) -> HttpResponse:
+    if request.user.is_authenticated:
+        return redirect("home")
+
     if request.method == "POST":
         username: str | None = request.POST.get("username")
         password: str | None = request.POST.get("password")
@@ -63,6 +67,7 @@ def room(request: HttpRequest, pk: str) -> HttpResponse:
     return render(request, "base/room.html", context)
 
 
+@login_required(login_url="/login")
 def createRoom(
     request: HttpRequest,
 ) -> HttpResponseRedirect | HttpResponsePermanentRedirect | HttpResponse:
@@ -77,9 +82,13 @@ def createRoom(
     return render(request, "base/room_form.html", context)
 
 
+@login_required(login_url="/login")
 def updateRoom(request: HttpRequest, pk: str) -> HttpResponse:
     room: Room = Room.objects.get(id=pk)
     form: RoomForm = RoomForm(instance=room)
+
+    if request.user != room.host:
+        return HttpResponse("You are not allowed here.")
 
     if request.method == "POST":
         form = RoomForm(request.POST, instance=room)
@@ -91,9 +100,14 @@ def updateRoom(request: HttpRequest, pk: str) -> HttpResponse:
     return render(request, "base/room_form.html", context)
 
 
+@login_required(login_url="/login")
 def deleteRoom(request: HttpRequest, pk: str) -> HttpResponse:
     room: Room = Room.objects.get(id=int(pk))
     context: dict = {"obj": room}
+
+    if request.user != room.host:
+        return HttpResponse("You are not allowed here.")
+
     if request.method == "POST":
         room.delete()
         return redirect("home")
