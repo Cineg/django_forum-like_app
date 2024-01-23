@@ -36,16 +36,21 @@ def loginPage(request: HttpRequest) -> HttpResponse:
     return render(request, "base/login_register.html", context)
 
 
+def logoutUser(request) -> HttpResponseRedirect | HttpResponsePermanentRedirect:
+    logout(request)
+    return redirect("home")
+
+
 def home(request: HttpRequest) -> HttpResponse:
     q: str | None = request.GET.get("q")
     if q == None:
         q = ""
 
-    rooms = Room.objects.filter(
+    rooms: BaseManager[Room] = Room.objects.filter(
         Q(topic__name__icontains=q) | Q(name__icontains=q) | Q(description__icontains=q)
     )
-    topics = Topic.objects.all()
-    rooms_count = rooms.count()
+    topics: BaseManager[Topic] = Topic.objects.all()
+    rooms_count: int = rooms.count()
 
     context: dict = {"rooms": rooms, "topics": topics, "rooms_count": rooms_count}
     return render(request, "base/home.html", context)
