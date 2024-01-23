@@ -8,6 +8,7 @@ from django.http import (
     HttpResponsePermanentRedirect,
     HttpResponseRedirect,
 )
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User, AbstractBaseUser
 from django.db.models import Q
 from .models import Room, Topic
@@ -16,6 +17,7 @@ from .forms import RoomForm
 
 # Create your views here.
 def loginPage(request: HttpRequest) -> HttpResponse:
+    page: str = "login"
     if request.user.is_authenticated:
         return redirect("home")
 
@@ -36,7 +38,7 @@ def loginPage(request: HttpRequest) -> HttpResponse:
         else:
             messages.error(request, "Username or password does not exist.")
 
-    context: dict = {}
+    context: dict = {"page": page}
     return render(request, "base/login_register.html", context)
 
 
@@ -45,15 +47,48 @@ def logoutUser(request) -> HttpResponseRedirect | HttpResponsePermanentRedirect:
     return redirect("home")
 
 
+def registerPage(request) -> HttpResponse:
+    page: str = "register"
+    form: UserCreationForm = UserCreationForm()
+
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        is_error: bool = False
+
+        user_exists: User | None
+        try:
+            user_exists = User.objects.get(username=form.data["username"])
+        except:
+            user_exists = None
+
+        if not form.is_valid():
+            messages.error(request, "An error occurred during registration.")
+            is_error = True
+
+        if user_exists != None:
+            messages.error(request, "User already exists.")
+            is_error = True
+
+        if not is_error:
+            user: User = form.save(commit=False)
+            user.username = user.username.lower()
+            user.save()
+            login(request, user)
+            return redirect("home")
+
+    context: dict = {"page": page, "form": form}
+    return render(request, "base/login_register.html", context)
+
+
 def home(request: HttpRequest) -> HttpResponse:
     q: str | None = request.GET.get("q")
     if q == None:
         q = ""
 
-    rooms: BaseManager[Room] = Room.objects.filter(
+    rooms = Room.objects.filter(
         Q(topic__name__icontains=q) | Q(name__icontains=q) | Q(description__icontains=q)
     )
-    topics: BaseManager[Topic] = Topic.objects.all()
+    topics = Topic.objects.all()
     rooms_count: int = rooms.count()
 
     context: dict = {"rooms": rooms, "topics": topics, "rooms_count": rooms_count}
