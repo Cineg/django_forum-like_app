@@ -1,18 +1,15 @@
 {% extends "main.html" %}
 {% block content %}
     <main class="home">
-        <nav>
-            {% include "base/topics_component.html" %}
-        </nav>
+        {% include "base/topics_component.html" %}
         <article>
             <h1>Username: {{ user }}</h1>
             <h2>Bio</h2>
-
             <hr />
             {% include "base/feed_component.html" %}
         </article>
         <section>
-        {% include "base/activity_component.html" %}
+            {% include "base/activity_component.html" %}
         </section>
     </main>
 {% endblock content %}
