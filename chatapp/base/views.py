@@ -151,10 +151,13 @@ def createRoom(
     request: HttpRequest,
 ) -> HttpResponseRedirect | HttpResponsePermanentRedirect | HttpResponse:
     form: RoomForm = RoomForm()
+
     if request.method == "POST":
         form = RoomForm(request.POST)
         if form.is_valid():
-            form.save()
+            room = form.save(commit=False)
+            room.host = request.user
+            room.save()
             return redirect("home")
 
     context: dict = {"form": form}

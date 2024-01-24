@@ -1,13 +1,28 @@
-<a href="/">
-    <h1>Logo</h1>
-</a>
+{% load static %}
+<a href="{% url "home" %}" class="logo">Logo</a>
 <form action="{% url 'home' %}" method="get">
-    <input type="text" name="q" placeholder="Search rooms..." />
+    <label>
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="24"
+             height="24"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="#000000"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+        <input type="text" name="q" placeholder="Search rooms..." />
+    </label>
 </form>
-{% if request.user.is_authenticated %}
-    <p>Hello, {{ request.user }}</p>
-    <a href="{% url 'logout' %}">Logout</a>
-{% else %}
-    <a href="{% url 'login' %}">Login</a>
-{% endif %}
-<hr />
+<div class="user">
+    {% if request.user.is_authenticated %}
+        <img src= "{% static "images/default_head.svg" %}" />
+        {% comment %} <p>Hello, {{ request.user }}</p> {% endcomment %}
+        <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+        <a href="{% url 'login' %}">Login</a>
+    {% endif %}
+</div>

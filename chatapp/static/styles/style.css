@@ -1,3 +1,101 @@
+/* https://coolors.co/palette/f4f1de-e07a5f-3d405b-81b29a-f2cc8f */
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,700;1,100;1,400;1,700&display=swap");
+
+:root {
+	--color-main-light: #fcfbf6;
+	--color-main: #f4f1de;
+	--color-main-dark: #d7d5c8;
+	--color-bg: #3d405b;
+	--color-bg-lighter: #5e638d;
+	--color-success: #81b29a;
+	--color-error: #e07a5f;
+}
+
+a,
+button {
+	all: unset;
+}
+
+a:hover {
+	cursor: pointer;
+}
+
+body {
+	font-family: "Roboto", sans-serif;
+	margin: 0;
+	background-color: var(--color-bg);
+	color: var(--color-main-light);
+	font-size: 12pt;
+}
+
+header {
+	padding: 1rem;
+	display: grid;
+	grid-template-columns: 1fr 3fr 1fr;
+	align-items: center;
+}
+
+header .logo {
+	margin: 0;
+	padding: 0;
+	font-size: 2.5rem;
+	font-weight: 600;
+}
+
+header form {
+	width: 80%;
+	display: flex;
+	flex-direction: row;
+}
+
+header form label {
+	padding: 1rem;
+	width: inherit;
+	box-sizing: border-box;
+	border-radius: 10px;
+	border: 0;
+	background-color: var(--color-bg-lighter);
+	display: flex;
+}
+
+header form svg {
+	stroke: var(--color-main-light);
+}
+
+header form input {
+	border: 0;
+	background-color: transparent;
+	padding: 0 1rem;
+	color: var(--color-main-light);
+	outline: none;
+	width: inherit;
+}
+
+header form input::placeholder {
+	font-style: italic;
+	color: var(--color-main-dark);
+}
+
+header .user {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	margin: 0 1rem;
+}
+
+header .user img {
+	width: 5rem;
+	height: 5rem;
+	border: 2px solid var(--color-main);
+	border-radius: 50%;
+}
+
+header .user a {
+	margin-left: 10px;
+	font-weight: 700;
+}
+
 main {
 	display: grid;
 }
