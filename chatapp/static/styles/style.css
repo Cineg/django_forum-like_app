@@ -16,12 +16,25 @@
 }
 
 a,
-button {
+button,
+p {
 	all: unset;
+}
+
+a {
+	transition: 0.2s ease-in-out;
 }
 
 a:hover {
 	cursor: pointer;
+}
+
+h3 {
+	font-size: 1.1rem;
+	font-weight: 700;
+	padding: 0;
+	margin: 0;
+	margin-bottom: 0.5rem;
 }
 
 body {
@@ -126,11 +139,6 @@ nav {
 }
 
 nav h3 {
-	font-size: 1rem;
-	font-weight: 700;
-	padding: 0;
-	margin: 0;
-	margin-bottom: 0.5rem;
 	color: var(--color-bg-text);
 }
 
@@ -141,4 +149,111 @@ nav .topic {
 nav .topic:hover {
 	font-weight: 700;
 	color: var(--color-accent);
+}
+
+section {
+	padding: 1rem;
+	display: flex;
+	flex-direction: column;
+}
+
+article {
+	padding: 0.5rem;
+}
+
+a.btn {
+	color: var(--color-bg-dark);
+	padding: 1rem;
+	font-weight: 700;
+	background-color: var(--color-success);
+	border-radius: 10px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+a.btn-edit {
+	background-color: var(--color-main-dark);
+}
+
+a.btn-delete {
+	background-color: var(--color-error);
+}
+
+a.btn:hover {
+	background-color: var(--color-accent);
+}
+
+a.btn svg {
+	margin-right: 0.25rem;
+}
+
+.room-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.room-header h3 {
+	margin-bottom: 0;
+}
+
+.room-header p {
+	font-weight: 300;
+	font-size: 0.85rem;
+	color: var(--color-bg-text);
+}
+
+.room {
+	margin: 1rem 0;
+	background-color: var(--color-bg-medium);
+	border-radius: 10px;
+	padding: 0.5rem 1rem;
+	display: flex;
+	flex-direction: column;
+}
+
+.room .room-controls {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.room .room-controls a {
+	font-size: 0.75rem;
+	padding: 0.5rem;
+	margin-right: 0.25rem;
+	font-weight: 300;
+}
+
+.room .room-controls svg {
+	stroke-width: 1;
+	height: 0.75rem;
+	width: 0.75rem;
+	padding: 0;
+}
+
+.room-name {
+	padding: 0.5rem 0;
+	font-weight: 700;
+	font-size: 1.5rem;
+}
+
+.room-details {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	align-items: center;
+	padding-bottom: 0.5rem;
+}
+
+.user-handle {
+	font-style: italic;
+	color: var(--color-accent);
+	padding: 0.5rem 0;
+}
+
+.room-topic {
+	font-weight: 300;
+	font-style: italic;
 }

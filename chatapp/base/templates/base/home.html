@@ -3,8 +3,27 @@
     <main class="home">
         {% include "base/topics_component.html" %}
         <section class="chatrooms">
-            <p>{{ rooms_count }} rooms available</p>
-            <a href="{% url 'create-room' %}">Create Room</a>
+            <div class="room-header">
+                <div class="room-count">
+                    <h3>Rooms:</h3>
+                    <p>{{ rooms_count }} rooms available</p>
+                </div>
+                <a href="{% url 'create-room' %}" class="btn">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="24"
+                         height="24"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="#000000"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19" />
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                    <span>Create Room</span>
+                </a>
+            </div>
             {% include "base/feed_component.html" %}
         </section>
         <section class="feed">
