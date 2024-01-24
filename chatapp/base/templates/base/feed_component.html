@@ -5,7 +5,11 @@
             <a href="{% url 'delete-room' room.id %}">Delete Room</a>
         {% endif %}
         <h5>
+<<<<<<< HEAD
             <span><a href="{% url "user-profile" room.host.username %}">@{{ room.host.username }}</a> </span>
+=======
+            <span>@{{ room.host.username }}</span>
+>>>>>>> ca8495c6a40cb7ec44aacef9c2207862f33353d4
             {{ room.id }} --
             <a href="{% url 'room' room.id %}">{{ room.name }}</a>
             <p>
