@@ -33,5 +33,8 @@ class Message(models.Model):
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering: list[str] = ["-updated", "-created"]
+
     def __str__(self) -> str:
-        return f"{self.room} - {self.body}"
+        return self.body[0:50]

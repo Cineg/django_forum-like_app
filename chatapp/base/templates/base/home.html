@@ -1,38 +1,16 @@
 {% extends "main.html" %}
 {% block content %}
     <main class="home">
-        <aside>
-            <p>Browse topics/tags:</p>
-            <hr />
-            <div>
-                <a href={% url "home" %}>All</a>
-            </div>
-            {% for topic in topics %}
-                <div>
-                    <a href={% url "home" %}?q={{ topic.name }}> {{ topic.name }} </a>
-                </div>
-            {% endfor %}
-        </aside>
+        <nav class="topics">
+            {% include "base/topics_component.html" %}
+        </nav>
         <section class="chatrooms">
             <p>{{ rooms_count }} rooms available</p>
             <a href="{% url 'create-room' %}">Create Room</a>
-            {% for room in rooms %}
-                <article>
-                    {% if request.user == room.host %}
-                        <a href="{% url 'update-room' room.id %}">Edit room</a>
-                        <a href="{% url 'delete-room' room.id %}">Delete Room</a>
-                    {% endif %}
-                    <h5>
-                        <span>@{{ room.host.username }}</span>
-                        {{ room.id }} --
-                        <a href="{% url 'room' room.id %}">{{ room.name }}</a>
-                        <p>
-                            <i>{{ room.topic.name }}</i>
-                        </p>
-                    </h5>
-                    <hr />
-                {% endfor %}
-            </article>
+            {% include "base/feed_component.html" %}
+        </section>
+        <section class="feed">
+            {% include "base/activity_component.html" %}
         </section>
     </main>
 {% endblock content %}

@@ -22,8 +22,11 @@ def loginPage(request: HttpRequest) -> HttpResponse:
         return redirect("home")
 
     if request.method == "POST":
-        username: str | None = request.POST.get("username").lower()
+        username: str | None = request.POST.get("username")
         password: str | None = request.POST.get("password")
+
+        if username != None:
+            username = username.lower()
 
         try:
             user: User | AbstractBaseUser | None = User.objects.get(username=username)
@@ -90,8 +93,14 @@ def home(request: HttpRequest) -> HttpResponse:
     )
     topics = Topic.objects.all()
     rooms_count: int = rooms.count()
+    room_messages = Message.objects.filter(Q(room__topic__name__icontains=q))[0:3]
 
-    context: dict = {"rooms": rooms, "topics": topics, "rooms_count": rooms_count}
+    context: dict = {
+        "rooms": rooms,
+        "topics": topics,
+        "rooms_count": rooms_count,
+        "room_messages": room_messages,
+    }
     return render(request, "base/home.html", context)
 
 
@@ -114,6 +123,27 @@ def room(request: HttpRequest, pk: str) -> HttpResponse:
     }
 
     return render(request, "base/room.html", context)
+
+
+def userProfile(request: HttpRequest, pk: str):
+    user: User = User.objects.get(username=pk)
+    if user == None:
+        messages.error(
+            request,
+            f"Can't find username: {pk}. Are you sure you spelled it correctly?",
+        )
+
+    rooms = user.room_set.all()
+    conversation_messages = user.message_set.all()[0:5]
+    topics = Topic.objects.all()[0:5]
+    context = {
+        "user": user,
+        "rooms": rooms,
+        "topics": topics,
+        "room_messages": conversation_messages,
+    }
+
+    return render(request, "base/profile.html", context)
 
 
 @login_required(login_url="/login")
