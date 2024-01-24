@@ -90,8 +90,14 @@ def home(request: HttpRequest) -> HttpResponse:
     )
     topics = Topic.objects.all()
     rooms_count: int = rooms.count()
+    room_messages = Message.objects.filter(Q(room__topic__name__icontains=q))[0:3]
 
-    context: dict = {"rooms": rooms, "topics": topics, "rooms_count": rooms_count}
+    context: dict = {
+        "rooms": rooms,
+        "topics": topics,
+        "rooms_count": rooms_count,
+        "room_messages": room_messages,
+    }
     return render(request, "base/home.html", context)
 
 
