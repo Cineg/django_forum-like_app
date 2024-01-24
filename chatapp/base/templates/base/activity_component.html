@@ -2,11 +2,7 @@
 <hr />
 {% for message in room_messages %}
     <article>
-<<<<<<< HEAD
         <span><a href="{% url "user-profile" message.user %}">@{{ message.user }}</a>, {{ message.updated|timesince }} ago</span>
-=======
-        <span>@{{ message.user }}, {{ message.updated|timesince }} ago</span>
->>>>>>> ca8495c6a40cb7ec44aacef9c2207862f33353d4
         <p>{{ message.room.name }}</p>
         <p>{{ message }}</p>
         {% if message.user == request.user %}

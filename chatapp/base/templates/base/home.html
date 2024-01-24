@@ -1,15 +1,9 @@
 {% extends "main.html" %}
 {% block content %}
     <main class="home">
-<<<<<<< HEAD
-        <nav class="topics">
-            {% include "base/topics_component.html" %}
-        </nav>
-=======
         <section class="topics">
             {% include "base/topics_component.html" %}
         </section>
->>>>>>> ca8495c6a40cb7ec44aacef9c2207862f33353d4
         <section class="chatrooms">
             <p>{{ rooms_count }} rooms available</p>
             <a href="{% url 'create-room' %}">Create Room</a>
