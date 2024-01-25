@@ -13,6 +13,8 @@
 	--color-success: #81b29a;
 	--color-error: #e07a5f;
 	--color-accent: #f2cc8f;
+
+	--border-radius: 15px;
 }
 
 a,
@@ -74,7 +76,7 @@ header form label {
 	padding: 1rem;
 	width: inherit;
 	box-sizing: border-box;
-	border-radius: 10px;
+	border-radius: var(--border-radius);
 	border: 0;
 	background-color: var(--color-bg-light);
 	display: flex;
@@ -157,16 +159,12 @@ section {
 	flex-direction: column;
 }
 
-article {
-	padding: 0.5rem;
-}
-
 a.btn {
 	color: var(--color-bg-dark);
 	padding: 1rem;
 	font-weight: 700;
 	background-color: var(--color-success);
-	border-radius: 10px;
+	border-radius: var(--border-radius);
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -188,6 +186,20 @@ a.btn svg {
 	margin-right: 0.25rem;
 }
 
+.btn-small {
+	font-size: 0.75rem;
+	padding: 0.5rem 0.75rem !important ;
+	margin-right: 0.25rem;
+	font-weight: 300 !important;
+}
+
+.btn-small svg {
+	stroke-width: 1;
+	height: 0.75rem;
+	width: 0.75rem;
+	padding: 0;
+}
+
 .room-header {
 	display: flex;
 	justify-content: space-between;
@@ -207,7 +219,7 @@ a.btn svg {
 .room {
 	margin: 1rem 0;
 	background-color: var(--color-bg-medium);
-	border-radius: 10px;
+	border-radius: var(--border-radius);
 	padding: 0.5rem 1rem;
 	display: flex;
 	flex-direction: column;
@@ -218,20 +230,6 @@ a.btn svg {
 	flex-direction: row;
 	align-items: center;
 	justify-content: flex-end;
-}
-
-.room .room-controls a {
-	font-size: 0.75rem;
-	padding: 0.5rem;
-	margin-right: 0.25rem;
-	font-weight: 300;
-}
-
-.room .room-controls svg {
-	stroke-width: 1;
-	height: 0.75rem;
-	width: 0.75rem;
-	padding: 0;
 }
 
 .room-name {
@@ -256,4 +254,41 @@ a.btn svg {
 .room-topic {
 	font-weight: 300;
 	font-style: italic;
+}
+
+.activity-container {
+	margin: 0.25rem 0;
+	border-radius: var(--border-radius);
+	background-color: var(--color-bg-medium);
+	padding: 0.5rem;
+}
+
+.activity-message-data {
+	font-size: 0.75rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.time-ago {
+	font-weight: 100;
+	font-size: 0.6rem;
+	font-style: italic;
+}
+
+.activity-message-feed {
+	display: flex;
+	flex-direction: column;
+}
+
+.room-name-activity {
+	font-size: 1rem;
+	padding-top: 0;
+}
+
+.room-message {
+	font-size: 0.8rem;
+	margin-bottom: 0.5rem;
+	color: var(--color-main-dark);
 }
