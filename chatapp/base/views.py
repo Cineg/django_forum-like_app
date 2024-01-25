@@ -108,6 +108,7 @@ def room(request: HttpRequest, pk: str) -> HttpResponse:
     room: Room = Room.objects.get(id=int(pk))
     conversation_messages = room.message_set.all()  # type: ignore
     participants = room.participants.all()
+    topics = Topic.objects.all()
 
     if request.method == "POST":
         message: Message = Message.objects.create(
@@ -120,6 +121,7 @@ def room(request: HttpRequest, pk: str) -> HttpResponse:
         "room": room,
         "conversation_messages": conversation_messages,
         "participants": participants,
+        "topics": topics,
     }
 
     return render(request, "base/room.html", context)

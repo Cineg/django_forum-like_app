@@ -1,30 +1,55 @@
 {% extends "main.html" %}
 {% block content %}
-    <main class="room">
+    <main>
+        {% include "base/topics_component.html" %}
         <section>
-            <h1>{{ room.name }}</h1>
-            <p>{{ room.description }}</p>
+            <div class="thread-start">
+                <h1>{{ room.name }}</h1>
+                by <a class="user-handle">@{{ room.host }}</a>
+                <p>{{ room.description }}</p>
+            </div>
             <div class="comment-wrapper">
                 <h3>Conversation</h3>
                 {% for message in conversation_messages %}
                     <div class="message">
+                        <div class="activity-message-data">
+                            <a href="{% url "user-profile" message.user %}" class="user-handle">@{{ message.user }}</a>
+                            <p class="time-ago">{{ message.updated|timesince }} ago</p>
+                        </div>
+                        <p class="room-message">{{ message.body }}</p>
                         {% if message.user == request.user %}
-                            <a href="{% url 'delete-message' message.id %}">Delete</a>
+                            <div class="align-right">
+                                <a href="{% url 'delete-message' message.id %}"
+                                   class="btn btn-delete btn-small">
+                                    <svg fill="#000000"
+                                         width="800px"
+                                         height="800px"
+                                         viewBox="-3.5 0 19 19"
+                                         xmlns="http://www.w3.org/2000/svg"
+                                         class="cf-icon-svg">
+                                        <path d="M11.383 13.644A1.03 1.03 0 0 1 9.928 15.1L6 11.172 2.072 15.1a1.03 1.03 0 1 1-1.455-1.456l3.928-3.928L.617 5.79a1.03 1.03 0 1 1 1.455-1.456L6 8.261l3.928-3.928a1.03 1.03 0 0 1 1.455 1.456L7.455 9.716z" />
+                                    </svg>
+                                    <span>Delete Message</span></a>
+                            </div>
                         {% endif %}
-                        <small><a href="{% url "user-profile" message.user %}">@ {{ message.user }}</a> {{ message.created|timesince }} ago</small>
-                        <p>{{ message.body }}</p>
-                        <hr />
                     </div>
                 {% endfor %}
-            </div>
-            {% if request.user.is_authenticated %}
-                <div class="comment-form">
-                    <form method="POST", action="">
+                {% if request.user.is_authenticated %}
+                    <form method="POST", action="" class="comment-form">
                         {% csrf_token %}
-                        <input type="text" name="body" placeholder="Write your message here..." />
+                        <label class="comment-form">
+                            <svg fill="#000000"
+                                 width="800px"
+                                 height="800px"
+                                 viewBox="0 0 24 24"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path id="write" class="cls-1" d="M1450,216h-20a2,2,0,0,1-2-2V194a2,2,0,0,1,2-2h12.81l-2,2H1430v20h20V203.193l2-2V214A2,2,0,0,1,1450,216Zm-12-5-4.99.014L1433,206l13.55-13.439a1.962,1.962,0,0,1,2.78,0l2.08,2.09a1.971,1.971,0,0,1,0,2.788Zm-3-2h3l-3-3v3Zm12.94-15.045L1437,205l2,2,11.02-10.955Z" transform="translate(-1428 -192)" />
+                            </svg>
+                            <input type="text" name="body" placeholder="Write your message here..." />
+                        </label>
                     </form>
-                </div>
-            {% endif %}
+                {% endif %}
+            </div>
         </section>
         <aside class="participants">
             {% include "base/participants_component.html" %}
