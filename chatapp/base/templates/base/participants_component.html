@@ -1,8 +1,6 @@
 <h3>Participants</h3>
 {% for participant in participants %}
-    <div>
-        <p>
-            <a href="{% url "user-profile" participant %}">@{{ participant }}</a>
-        </p>
+    <div class="participant">
+        <a href="{% url "user-profile" participant %}" class="user-handle">@{{ participant }}</a>
     </div>
 {% endfor %}

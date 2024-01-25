@@ -148,7 +148,8 @@ nav .topic:hover {
 	color: var(--color-accent);
 }
 
-section {
+section,
+aside {
 	padding: 1rem;
 	display: flex;
 	flex-direction: column;
