@@ -153,6 +153,8 @@ def createRoom(
     request: HttpRequest,
 ) -> HttpResponseRedirect | HttpResponsePermanentRedirect | HttpResponse:
     form: RoomForm = RoomForm()
+    topics = Topic.objects.all()
+    room_messages = Message.objects.filter()[0:3]
 
     if request.method == "POST":
         form = RoomForm(request.POST)
@@ -162,7 +164,7 @@ def createRoom(
             room.save()
             return redirect("home")
 
-    context: dict = {"form": form}
+    context: dict = {"form": form, "topics": topics, "room_messages": room_messages}
     return render(request, "base/room_form.html", context)
 
 
@@ -170,6 +172,9 @@ def createRoom(
 def updateRoom(request: HttpRequest, pk: str) -> HttpResponse:
     room: Room = Room.objects.get(id=pk)
     form: RoomForm = RoomForm(instance=room)
+
+    topics = Topic.objects.all()
+    room_messages = Message.objects.filter()[0:3]
 
     if request.user != room.host:
         return HttpResponse("You are not allowed here.")
@@ -180,14 +185,16 @@ def updateRoom(request: HttpRequest, pk: str) -> HttpResponse:
             form.save()
             return redirect("home")
 
-    context: dict = {"form": form}
+    context: dict = {"form": form, "topics": topics, "room_messages": room_messages}
     return render(request, "base/room_form.html", context)
 
 
 @login_required(login_url="/login")
 def deleteRoom(request: HttpRequest, pk: str) -> HttpResponse:
     room: Room = Room.objects.get(id=int(pk))
-    context: dict = {"obj": room}
+    topics = Topic.objects.all()
+    room_messages = Message.objects.filter()[0:3]
+    context: dict = {"obj": room, "topics": topics, "room_messages": room_messages}
 
     if request.user != room.host:
         return HttpResponse("You are not allowed here.")
@@ -202,6 +209,8 @@ def deleteRoom(request: HttpRequest, pk: str) -> HttpResponse:
 @login_required(login_url="/login")
 def deleteMessage(request: HttpRequest, pk: str) -> HttpResponse:
     message: Message = Message.objects.get(id=int(pk))
+    topics = Topic.objects.all()
+    room_messages = Message.objects.filter()[0:3]
 
     if request.user != message.user:
         return HttpResponse("You are not allowed here.")
@@ -210,5 +219,5 @@ def deleteMessage(request: HttpRequest, pk: str) -> HttpResponse:
         message.delete()
         return redirect("home")
 
-    context: dict = {"obj": message}
+    context: dict = {"obj": message, "topics": topics, "room_messages": room_messages}
     return render(request, "base/delete.html", context)

@@ -1,10 +1,15 @@
 {% extends "main.html" %}
 {% block content %}
-    <div>
-        <form action="" method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Submit" />
-        </form>
-    </div>
+    <main>
+        {% include "base/topics_component.html" %}
+        <section>
+            <form action="" method="post" class="form">
+                {% csrf_token %}
+                {{ form.as_div }}
+                {% comment %} {% for field in form %}<span class="form-field">{{ field }}</span>{% endfor %} {% endcomment %}
+                <input type="submit" value="Submit" class="btn" />
+            </form>
+        </section>
+        {% include "base/activity_component.html" %}
+    </main>
 {% endblock content %}

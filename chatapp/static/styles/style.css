@@ -23,10 +23,12 @@ p {
 	all: unset;
 }
 
+.btn,
 a {
 	transition: 0.2s ease-in-out;
 }
 
+.btn:hover,
 a:hover {
 	cursor: pointer;
 }
@@ -126,15 +128,13 @@ main {
 }
 
 nav {
-	padding: 1.5rem;
+	padding: 2rem 1rem;
 	background: linear-gradient(180deg, #3d405b, 0%, #3d405b, 50%, #2d2f42);
 	/* background-color: var(--color-bg-medium); */
 	height: 100%;
 	border-bottom-left-radius: var(--border-radius);
 	border-bottom-right-radius: var(--border-radius);
-	min-width: 75%;
-	max-width: 85%;
-	width: fit-content;
+	margin-right: 1rem;
 }
 
 nav h3 {
@@ -142,7 +142,7 @@ nav h3 {
 }
 
 nav .topic {
-	padding: 0.5rem 0;
+	padding: 0.5rem;
 }
 
 nav .topic:hover {
@@ -157,6 +157,7 @@ aside {
 	flex-direction: column;
 }
 
+.btn,
 a.btn {
 	color: var(--color-bg-dark);
 	padding: 1rem;
@@ -173,6 +174,7 @@ a.btn {
 	align-items: center;
 }
 
+.btn-edit,
 a.btn-edit {
 	background: linear-gradient(
 		150deg,
@@ -182,6 +184,7 @@ a.btn-edit {
 	);
 }
 
+.btn-delete,
 a.btn-delete {
 	background: linear-gradient(
 		150deg,
@@ -191,6 +194,7 @@ a.btn-delete {
 	);
 }
 
+.btn:hover,
 a.btn:hover {
 	background: linear-gradient(
 		150deg,
@@ -369,4 +373,51 @@ a.btn svg {
 .comment-form input::placeholder {
 	font-style: italic;
 	color: var(--color-bg-text);
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	width: -webkit-fill-available;
+	align-items: center;
+	background-color: var(--color-bg-medium);
+	padding: 1rem;
+	border-radius: var(--border-radius);
+}
+
+.form * {
+	background-color: transparent;
+	border: none;
+	border-radius: var(--border-radius);
+	background-color: var(--color-bg-dark);
+	padding: 0.2rem;
+	margin: 0.2rem;
+	color: var(--color-main);
+}
+
+.form *::placeholder {
+	color: var(--color-bg-text);
+}
+
+.form div {
+	display: flex;
+	width: inherit;
+}
+
+.form div label {
+	font-size: 0.9rem;
+	font-weight: 300;
+	color: var(--color-bg-text);
+	margin-right: 0.5rem;
+}
+
+.form div :last-child {
+	width: -webkit-fill-available;
+}
+
+.form input.btn {
+	margin-top: 0.5rem;
+	padding: 0.5rem 1rem;
+	font-size: 1.2rem;
+	color: var(--color-bg-dark);
 }
