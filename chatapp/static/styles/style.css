@@ -127,12 +127,14 @@ main {
 
 nav {
 	padding: 1.5rem;
-	background-color: var(--color-bg-medium);
+	background: linear-gradient(180deg, #3d405b, 0%, #3d405b, 50%, #2d2f42);
+	/* background-color: var(--color-bg-medium); */
 	height: 100%;
 	border-bottom-left-radius: var(--border-radius);
 	border-bottom-right-radius: var(--border-radius);
-	min-width: 70%;
-	width: min-content;
+	min-width: 75%;
+	max-width: 85%;
+	width: fit-content;
 }
 
 nav h3 {
@@ -159,7 +161,12 @@ a.btn {
 	color: var(--color-bg-dark);
 	padding: 1rem;
 	font-weight: 700;
-	background-color: var(--color-success);
+	background: linear-gradient(
+		150deg,
+		var(--color-success),
+		75%,
+		var(--color-main-light)
+	);
 	border-radius: var(--border-radius);
 	display: flex;
 	flex-direction: row;
@@ -167,15 +174,30 @@ a.btn {
 }
 
 a.btn-edit {
-	background-color: var(--color-main-dark);
+	background: linear-gradient(
+		150deg,
+		var(--color-main-dark),
+		75%,
+		var(--color-accent)
+	);
 }
 
 a.btn-delete {
-	background-color: var(--color-error);
+	background: linear-gradient(
+		150deg,
+		var(--color-error),
+		75%,
+		var(--color-error)
+	);
 }
 
 a.btn:hover {
-	background-color: var(--color-accent);
+	background: linear-gradient(
+		150deg,
+		var(--color-accent),
+		75%,
+		var(--color-main)
+	);
 }
 
 a.btn svg {
