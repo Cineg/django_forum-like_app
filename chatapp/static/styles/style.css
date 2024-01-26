@@ -208,6 +208,14 @@ a.btn svg {
 	margin-right: 0.25rem;
 }
 
+input.btn {
+	font-size: 1rem;
+	font-weight: 700;
+	padding: 0.5rem 1rem;
+	color: var(--color-bg-dark);
+	border: none;
+}
+
 .btn-small {
 	font-size: 0.75rem;
 	padding: 0.5rem 0.75rem !important ;
@@ -420,4 +428,33 @@ a.btn svg {
 	padding: 0.5rem 1rem;
 	font-size: 1.2rem;
 	color: var(--color-bg-dark);
+}
+
+.delete-wrapper {
+	padding: 1rem;
+	display: flex;
+	flex-direction: column;
+}
+
+.delete-conent {
+	display: flex;
+	flex-direction: column;
+}
+
+.delete-conent .quote {
+	font-style: italic;
+	padding: 1rem;
+	background-color: var(--color-bg-medium);
+	margin: 0.5rem;
+	border-radius: var(--border-radius);
+	color: var(--color-bg-text);
+}
+
+div.buttons {
+	display: flex;
+	justify-content: flex-end;
+}
+
+div.buttons * {
+	margin: 0.25rem;
 }
