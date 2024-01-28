@@ -1,10 +1,26 @@
 {% extends "main.html" %}
+{% load static %}
 {% block content %}
     <main class="home">
         {% include "base/topics_component.html" %}
         <article>
-            <h1>Username: {{ user }}</h1>
-            <h2>Bio</h2>
+            <div class="user-details">
+                <div class="user-details-data">
+                    {% if user_data.avatar == "" %}
+                        <img src="{% static "images/default_head.svg" %}" class="img" />
+                    {% else %}
+                        <img src="{% static 'images/' %}{{ user_data.avatar }}" class="img" />
+                    {% endif %}
+                    <div class="user-details-text-data">
+                        <h1>Username: {{ user }}</h1>
+                        <h2>Bio:</h2>
+                        <p>{{user_data.description}} </p>
+                    </div>
+                </div>
+                {% if user == request.user %}
+                    <a href="{% url "update-user-profile" user %}" class="btn btn=small">Update Profile</a>
+                {% endif %}
+            </div>
             <hr />
             {% include "base/feed_component.html" %}
         </article>

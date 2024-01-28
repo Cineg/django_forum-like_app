@@ -38,3 +38,16 @@ class Message(models.Model):
 
     def __str__(self) -> str:
         return self.body[0:50]
+
+
+def get_avatar_file_name(user_name: str) -> str:
+    return f"avatar-uploads/{user_name}/"
+
+
+class UserData(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    avatar = models.ImageField(blank=True, upload_to="")
+    description = models.TextField(blank=True)
+
+    def __str__(self) -> str:
+        return self.user.get_username()

@@ -1,5 +1,5 @@
 from django.forms import ModelForm, TextInput
-from .models import Room
+from .models import Room, UserData
 
 
 class RoomForm(ModelForm):
@@ -7,4 +7,10 @@ class RoomForm(ModelForm):
         model = Room
         fields = "__all__"
         exclude = ["host", "participants"]
-        widgets = {"topic": TextInput(attrs={"class": "myfieldclass"})}
+
+
+class UserDataForm(ModelForm):
+    class Meta:
+        model = UserData
+        fields = "__all__"
+        exclude = ["user"]

@@ -458,3 +458,29 @@ div.buttons {
 div.buttons * {
 	margin: 0.25rem;
 }
+
+.user-details {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: 1rem;
+}
+
+.user-details .btn {
+	height: fit-content;
+}
+
+.user-details-data {
+	display: flex;
+	flex-direction: row;
+}
+
+.user-details-text-data {
+	padding: 1rem;
+}
+.img {
+	width: 10rem;
+	height: 10rem;
+	border-radius: 50%;
+	border: 3px solid var(--color-accent);
+}

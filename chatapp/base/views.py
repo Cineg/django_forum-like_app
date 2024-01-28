@@ -11,8 +11,8 @@ from django.http import (
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User, AbstractBaseUser
 from django.db.models import Q
-from .models import Message, Room, Topic
-from .forms import RoomForm
+from .models import Message, Room, Topic, UserData
+from .forms import RoomForm, UserDataForm
 
 
 # Create your views here.
@@ -127,7 +127,7 @@ def room(request: HttpRequest, pk: str) -> HttpResponse:
     return render(request, "base/room.html", context)
 
 
-def userProfile(request: HttpRequest, pk: str):
+def userProfile(request: HttpRequest, pk: str) -> HttpResponse:
     user: User = User.objects.get(username=pk)
     if user == None:
         messages.error(
@@ -135,6 +135,7 @@ def userProfile(request: HttpRequest, pk: str):
             f"Can't find username: {pk}. Are you sure you spelled it correctly?",
         )
 
+    user_data = UserData.objects.filter(user=user).get()
     rooms = user.room_set.all()
     conversation_messages = user.message_set.all()[0:5]
     topics = Topic.objects.all()[0:5]
@@ -143,9 +144,40 @@ def userProfile(request: HttpRequest, pk: str):
         "rooms": rooms,
         "topics": topics,
         "room_messages": conversation_messages,
+        "user_data": user_data,
     }
 
     return render(request, "base/profile.html", context)
+
+
+@login_required(login_url="/login")
+def updateUserProfile(request: HttpRequest, pk: str):
+    user: User = User.objects.get(username=pk)
+    userdata = UserData.objects.get(user=user)
+    form: UserDataForm = UserDataForm(instance=userdata)
+    topics = Topic.objects.all()
+    room_messages = Message.objects.all()[0:3]
+
+    if request.user != user:
+        return HttpResponse("You are not allowed here.")
+
+    if request.method == "POST":
+        form = UserDataForm(request.POST, request.FILES, instance=userdata)
+        if form.is_valid():
+            form.instance.avatar.name = (
+                f"avatars/{user.username}/{form.instance.avatar.name}"
+            )
+            form.save()
+            return redirect("user-profile", pk=pk)
+
+    context: dict = {
+        "user": user,
+        "form": form,
+        "topics": topics,
+        "room_messages": room_messages,
+    }
+
+    return render(request, "base/room_form.html", context=context)
 
 
 @login_required(login_url="/login")
