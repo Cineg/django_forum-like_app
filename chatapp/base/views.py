@@ -95,11 +95,16 @@ def home(request: HttpRequest) -> HttpResponse:
     rooms_count: int = rooms.count()
     room_messages = Message.objects.filter(Q(room__topic__name__icontains=q))[0:3]
 
+    user_data = None
+    if request.user != None:
+        user_data = UserData.objects.get(user=request.user)
+
     context: dict = {
         "rooms": rooms,
         "topics": topics,
         "rooms_count": rooms_count,
         "room_messages": room_messages,
+        "user_data": user_data,
     }
     return render(request, "base/home.html", context)
 

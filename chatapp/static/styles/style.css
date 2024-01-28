@@ -26,6 +26,7 @@ p {
 .btn,
 a {
 	transition: 0.2s ease-in-out;
+	justify-content: center;
 }
 
 .btn:hover,
@@ -110,11 +111,21 @@ header .user {
 }
 
 header .user img {
+	margin-right: 0.5rem;
 	width: 4rem;
 	height: 4rem;
 	border: 3px solid var(--color-main);
 	border-radius: 50%;
 	background-color: var(--color-main);
+}
+
+header .nav-user-info {
+	display: flex;
+	flex-direction: column;
+}
+
+header .nav-user-info p {
+	margin-bottom: 0.5rem;
 }
 
 header .user a {
@@ -478,6 +489,7 @@ div.buttons * {
 .user-details-text-data {
 	padding: 1rem;
 }
+
 .img {
 	width: 10rem;
 	height: 10rem;
