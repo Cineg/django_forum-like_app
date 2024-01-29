@@ -2,53 +2,57 @@
 {% load custom_tags %}
 <article class="rooms-container">
     {% for room in rooms %}
-        <div class="room">
-            <a href="{% url 'room' room.id %}" class="room-name">{{ room.name }}</a>
-            <div class="room-details">
-                <div>
-                    <a href="{% url "user-profile" room.host.username %}">
-                        {% if user_data|get_item:room.host.username|get_item:"avatar" == "" %}
-                            <img src="{% static "images/default_head.svg" %}" class="img img-small" />
-                        {% else %}
-                            <img src="{% static "images/" %}{{ user_data|get_item:room.host.username|get_item:"avatar" }}" class="img img-small" />
-                        {% endif %}
-                    </a>
-                    <a href="{% url "user-profile" room.host.username %}"
-                       class="user-handle">@{{ room.host.username }}</a>
-                    <p>
-                        in <span class="room-topic">{{ room.topic.name }}</span>
-                    </p>
-                </div>
-                {% if request.user == room.host %}
-                    <div class="room-controls">
-                        <a href="{% url 'update-room' room.id %}" class="btn btn-edit btn-small">
-                            <svg version="1.1"
-                                 id="Layer_1"
-                                 xmlns="http://www.w3.org/2000/svg"
-                                 xmlns:xlink="http://www.w3.org/1999/xlink"
-                                 viewBox="0 0 32 32"
-                                 enable-background="new 0 0 32 32"
-                                 xml:space="preserve">
-                                <path fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M22.3,6.5l0.8-0.8c0.9-0.9,2.3-0.9,3.2,0l0,0 c0.9,0.9,0.9,2.3,0,3.2l-0.8,0.8" />
-                                <line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="18.9" y1="8.8" x2="23.2" y2="13.1" />
-                                <polyline fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="10.8,25.6 10,22 6.4,21.2 " />
-                                <path fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M10.5,25.9L5,27l1.1-5.5L21.7,5.9l4.4,4.4L10.5,25.9 z" />
-                                <path d="M8.5,26.3L5,27l0.7-3.5L8.5,26.3z" />
-                            </svg>
-                            <span>Edit room</span></a>
-                        <a href="{% url 'delete-room' room.id %}"
-                           class="btn btn-delete btn-small">
-                            <svg fill="#000000"
-                                 width="800px"
-                                 height="800px"
-                                 viewBox="-3.5 0 19 19"
-                                 xmlns="http://www.w3.org/2000/svg"
-                                 class="cf-icon-svg">
-                                <path d="M11.383 13.644A1.03 1.03 0 0 1 9.928 15.1L6 11.172 2.072 15.1a1.03 1.03 0 1 1-1.455-1.456l3.928-3.928L.617 5.79a1.03 1.03 0 1 1 1.455-1.456L6 8.261l3.928-3.928a1.03 1.03 0 0 1 1.455 1.456L7.455 9.716z" />
-                            </svg>
-                            <span>Delete Room</span></a>
+        <div class="room-wrap">
+            <div class="avatar">
+                <a href="{% url "user-profile" room.host.username %}">
+                    {% if user_data|get_item:room.host.username|get_item:"avatar" == "" %}
+                        <img src="{% static "images/default_head.svg" %}" class="img img-medium" />
+                    {% else %}
+                        <img src="{% static "images/" %}{{ user_data|get_item:room.host.username|get_item:"avatar" }}" class="img img-medium" />
+                    {% endif %}
+                </a>
+            </div>
+            <div class="room">
+                <a href="{% url 'room' room.id %}" class="room-name">{{ room.name }}</a>
+                <div class="room-details">
+                    <div>
+                        <a href="{% url "user-profile" room.host.username %}"
+                           class="user-handle">@{{ room.host.username }}</a>
+                        <p>
+                            in <span class="room-topic">{{ room.topic.name }}</span>
+                        </p>
                     </div>
-                {% endif %}
+                    {% if request.user == room.host %}
+                        <div class="room-controls">
+                            <a href="{% url 'update-room' room.id %}" class="btn btn-edit btn-small">
+                                <svg version="1.1"
+                                     id="Layer_1"
+                                     xmlns="http://www.w3.org/2000/svg"
+                                     xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     viewBox="0 0 32 32"
+                                     enable-background="new 0 0 32 32"
+                                     xml:space="preserve">
+                                    <path fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M22.3,6.5l0.8-0.8c0.9-0.9,2.3-0.9,3.2,0l0,0 c0.9,0.9,0.9,2.3,0,3.2l-0.8,0.8" />
+                                    <line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="18.9" y1="8.8" x2="23.2" y2="13.1" />
+                                    <polyline fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="10.8,25.6 10,22 6.4,21.2 " />
+                                    <path fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M10.5,25.9L5,27l1.1-5.5L21.7,5.9l4.4,4.4L10.5,25.9 z" />
+                                    <path d="M8.5,26.3L5,27l0.7-3.5L8.5,26.3z" />
+                                </svg>
+                                <span>Edit room</span></a>
+                            <a href="{% url 'delete-room' room.id %}"
+                               class="btn btn-delete btn-small">
+                                <svg fill="#000000"
+                                     width="800px"
+                                     height="800px"
+                                     viewBox="-3.5 0 19 19"
+                                     xmlns="http://www.w3.org/2000/svg"
+                                     class="cf-icon-svg">
+                                    <path d="M11.383 13.644A1.03 1.03 0 0 1 9.928 15.1L6 11.172 2.072 15.1a1.03 1.03 0 1 1-1.455-1.456l3.928-3.928L.617 5.79a1.03 1.03 0 1 1 1.455-1.456L6 8.261l3.928-3.928a1.03 1.03 0 0 1 1.455 1.456L7.455 9.716z" />
+                                </svg>
+                                <span>Delete Room</span></a>
+                        </div>
+                    {% endif %}
+                </div>
             </div>
         </div>
     {% endfor %}

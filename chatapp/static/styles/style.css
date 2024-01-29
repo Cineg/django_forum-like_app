@@ -257,13 +257,33 @@ input.btn {
 	color: var(--color-bg-text);
 }
 
-.room {
-	margin: 1rem 0;
+.room-wrap {
+	display: flex;
+	flex-direction: row;
 	background-color: var(--color-bg-medium);
 	border-radius: var(--border-radius);
+	align-items: center;
+	margin: 1rem 0;
+}
+
+.room-wrap .avatar {
+	width: 8rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0.25rem 1rem;
+}
+
+.room {
+	margin: 0.5rem;
+	background-color: var(--color-bg-dark);
+	border-left: 2px solid var(--color-accent);
+	border-top-right-radius: var(--border-radius);
+	border-bottom-right-radius: var(--border-radius);
 	padding: 0.5rem 1rem;
 	display: flex;
 	flex-direction: column;
+	width: -webkit-fill-available;
 }
 
 .room .room-controls {
@@ -495,6 +515,12 @@ div.buttons * {
 	height: 10rem;
 	border-radius: 50%;
 	border: 3px solid var(--color-accent);
+	object-fit: contain;
+}
+
+.img-medium {
+	width: 6rem;
+	height: 6rem;
 }
 
 .img-small {
