@@ -1,10 +1,18 @@
+{% load static %}
+{% load custom_tags %}
 <article class="rooms-container">
     {% for room in rooms %}
         <div class="room">
             <a href="{% url 'room' room.id %}" class="room-name">{{ room.name }}</a>
             <div class="room-details">
                 <div>
-                    by
+                    <a href="{% url "user-profile" room.host.username %}">
+                        {% if user_data|get_item:room.host.username|get_item:"avatar" == "" %}
+                            <img src="{% static "images/default_head.svg" %}" class="img img-small" />
+                        {% else %}
+                            <img src="{% static "images/" %}{{ user_data|get_item:room.host.username|get_item:"avatar" }}" class="img img-small" />
+                        {% endif %}
+                    </a>
                     <a href="{% url "user-profile" room.host.username %}"
                        class="user-handle">@{{ room.host.username }}</a>
                     <p>
@@ -28,7 +36,8 @@
                                 <path d="M8.5,26.3L5,27l0.7-3.5L8.5,26.3z" />
                             </svg>
                             <span>Edit room</span></a>
-                        <a href="{% url 'delete-room' room.id %}" class="btn btn-delete btn-small">
+                        <a href="{% url 'delete-room' room.id %}"
+                           class="btn btn-delete btn-small">
                             <svg fill="#000000"
                                  width="800px"
                                  height="800px"

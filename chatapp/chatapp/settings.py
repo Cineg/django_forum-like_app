@@ -66,6 +66,7 @@ TEMPLATES: list[dict] = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
             ],
+            "libraries": {"custom_tags": "base.template_tags.custom_tags"},
         },
     },
 ]

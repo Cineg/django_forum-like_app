@@ -95,9 +95,20 @@ def home(request: HttpRequest) -> HttpResponse:
     rooms_count: int = rooms.count()
     room_messages = Message.objects.filter(Q(room__topic__name__icontains=q))[0:3]
 
-    user_data = None
-    if request.user != None:
-        user_data = UserData.objects.get(user=request.user)
+    if request.user.is_authenticated:
+        logged_user_data = UserData.objects.get(user=request.user)
+    else:
+        logged_user_data = ""
+
+    user_data_q = UserData.objects.filter(Q(user__room__topic__name__icontains=q))
+    user_data: dict = {}
+    for user in user_data_q:
+        if user in user_data:
+            continue
+        user_data[user.user.username] = {
+            "description": user.description,
+            "avatar": user.avatar,
+        }
 
     context: dict = {
         "rooms": rooms,
@@ -105,6 +116,7 @@ def home(request: HttpRequest) -> HttpResponse:
         "rooms_count": rooms_count,
         "room_messages": room_messages,
         "user_data": user_data,
+        "logged_user_data": logged_user_data,
     }
     return render(request, "base/home.html", context)
 
@@ -115,6 +127,13 @@ def room(request: HttpRequest, pk: str) -> HttpResponse:
     participants = room.participants.all()
     topics = Topic.objects.all()
 
+    user_data = {participant: participant.userdata for participant in participants}
+
+    if request.user.is_authenticated:
+        logged_user_data = UserData.objects.get(user=request.user)
+    else:
+        logged_user_data = ""
+
     if request.method == "POST":
         message: Message = Message.objects.create(
             user=request.user, room=room, body=request.POST.get("body")
@@ -122,11 +141,14 @@ def room(request: HttpRequest, pk: str) -> HttpResponse:
         room.participants.add(request.user)
         return redirect("room", pk=room.id)
 
+    print(user_data)
     context: dict = {
         "room": room,
         "conversation_messages": conversation_messages,
         "participants": participants,
         "topics": topics,
+        "user_data": user_data,
+        "logged_user_data": logged_user_data,
     }
 
     return render(request, "base/room.html", context)
@@ -139,6 +161,10 @@ def userProfile(request: HttpRequest, pk: str) -> HttpResponse:
             request,
             f"Can't find username: {pk}. Are you sure you spelled it correctly?",
         )
+    if request.user.is_authenticated:
+        logged_user_data = UserData.objects.get(user=request.user)
+    else:
+        logged_user_data = ""
 
     user_data = UserData.objects.filter(user=user).get()
     rooms = user.room_set.all()
@@ -150,6 +176,7 @@ def userProfile(request: HttpRequest, pk: str) -> HttpResponse:
         "topics": topics,
         "room_messages": conversation_messages,
         "user_data": user_data,
+        "logged_user_data": logged_user_data,
     }
 
     return render(request, "base/profile.html", context)

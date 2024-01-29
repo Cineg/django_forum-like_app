@@ -20,10 +20,10 @@
 <div class="user">
     {% if request.user.is_authenticated %}
         <a href={% url "user-profile" request.user %}>
-            {% if user_data.avatar != "" %}
-                <img src= "{% static "images/" %}{{ user_data.avatar }}" />
+            {% if logged_user_data.avatar != "" %}
+                <img src= "{% static "images/" %}{{ logged_user_data.avatar }}">
             {% else %}
-                <img src= "{% static "images/default_head.svg" %}" />
+                <img src="{% static "images/default_head.svg" %}" />
             {% endif %}
         </a>
         <div class="nav-user-info">
