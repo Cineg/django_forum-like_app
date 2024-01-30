@@ -515,7 +515,7 @@ div.buttons * {
 	height: 10rem;
 	border-radius: 50%;
 	border: 3px solid var(--color-accent);
-	object-fit: contain;
+	object-fit: cover;
 }
 
 .img-medium {

@@ -123,7 +123,7 @@ def home(request: HttpRequest) -> HttpResponse:
 
 def room(request: HttpRequest, pk: str) -> HttpResponse:
     room: Room = Room.objects.get(id=int(pk))
-    conversation_messages = room.message_set.all()  # type: ignore
+    conversation_messages = room.message_set.all()
     participants = room.participants.all()
     topics = Topic.objects.all()
 
