@@ -1,27 +1,35 @@
 {% extends "main.html" %}
 {% block content %}
     {% if page == "login" %}
-        <div>
-            <form action="" method="post">
+        <main class="login-register">
+            <form action="" method="post" class="form">
                 {% csrf_token %}
-                <label for="Username">Username:</label>
-                <input type="text" name="username" placeholder="Enter Username" />
-                <label for="Username">Password:</label>
-                <input type="password" name="password" placeholder="Enter Password" />
-                <input type="submit" value="Login" />
+                <label for="Username">
+                    Username:
+                    <input type="text" name="username" placeholder="Enter Username" />
+                </label>
+                <label for="Username">
+                    Password:
+                    <input type="password" name="password" placeholder="Enter Password" />
+                </label>
+                <input type="submit" value="Login" class="btn" />
             </form>
             <p>Haven't signed up yet?</p>
-            <a href={% url "register" %}>Sign up</a>
-        </div>
+            <a href={% url "register" %}>
+                <h3>Sign up</h3>
+            </a>
+        </main>
     {% else %}
-        <div>
-            <form action="" method="post">
+        <main class="login-register">
+            <form action="" method="post" class="form">
                 {% csrf_token %}
-                {{ form.as_p }}
-                <input type="submit" value="Register" />
+                {{ form.as_div }}
+                <input type="submit" value="Register" class="btn btn-delete" />
             </form>
             <p>Already signed up?</p>
-            <a href={% url "login" %}>Login</a>
-        </div>
+            <a href={% url "login" %}>
+                <h3>Login</h3>
+            </a>
+        </main>
     {% endif %}
 {% endblock content %}

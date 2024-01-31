@@ -532,3 +532,73 @@ div.buttons * {
 	width: 1rem;
 	height: 1rem;
 }
+
+.login-register {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.flex-column {
+	display: flex;
+	flex-direction: column;
+}
+
+.login-register {
+	background-color: var(--color-bg-medium);
+	border-radius: var(--border-radius);
+	width: 50%;
+	min-width: min-content;
+	padding: 1rem;
+	margin: 1rem auto;
+}
+
+.login-register .form {
+	background-color: inherit;
+}
+
+.login-register .form label {
+	display: flex;
+	flex-direction: column;
+	padding: 1rem;
+	background-color: inherit;
+	width: -webkit-fill-available;
+}
+
+.login-register .form label input {
+	padding: 0.5rem;
+	background-color: inherit;
+}
+
+.login-register .form div {
+	flex-direction: column;
+}
+
+.login-register .form div label {
+	padding-bottom: 0.5rem;
+	margin-bottom: 0;
+	font-weight: 700;
+}
+
+.login-register .form .helptext {
+	font-size: 0.6rem;
+	margin: 0;
+	color: var(--color-bg-text);
+	margin-left: 1rem;
+	margin-bottom: 1rem;
+}
+
+.login-register .form .helptext ul li {
+	font-size: 0.6rem;
+	margin: 0;
+	color: var(--color-bg-text);
+	list-style-type: none;
+}
+
+.login-register .form div input {
+	flex-direction: column;
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-bg-text);
+	margin: 0 1rem;
+	margin-bottom: 0.5rem;
+}
